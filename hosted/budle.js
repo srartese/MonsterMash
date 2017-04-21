@@ -48,6 +48,33 @@ const renderDomo = function () {
       "Home Origin: "
     ),
     React.createElement("input", { id: "domoHome", type: "text", name: "home", placeholder: "Home Origin" }),
+     React.createElement(
+      "label",
+      { htmlFor: "eyes" },
+      "Eyes: "
+    ),
+    React.createElement("input", { type: "radio", name: "eyes", value: "2" }),
+    React.createElement("input", { type: "radio", name: "eyes", value: "1" }), 
+    
+    React.createElement(
+      "label",
+      { htmlFor: "horns" },
+      "horns: "
+    ),
+    React.createElement("input", { type: "radio", name: "horns", value: "0" }),
+    React.createElement("input", { type: "radio", name: "horns", value: "1" }), 
+    React.createElement("input", { type: "radio", name: "horns", value: "3" }),
+    
+     React.createElement(
+      "label",
+      { htmlFor: "color" },
+      "color: "
+    ),
+    React.createElement("input", { type: "radio", name: "color", value: "Green" }),
+    React.createElement("input", { type: "radio", name: "color", value: "Orange" }), 
+    React.createElement("input", { type: "radio", name: "color", value: "Blue" }),
+    
+    
     React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
     React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
   );
@@ -91,7 +118,21 @@ const renderDomoList = function () {
         " Home: ",
         domo.home,
         " "
-      )
+      ), 
+      React.createElement(
+        "h3",
+        { className: "domoEyes" },
+        " Eyes: ",
+        domo.eyes,
+        " "
+      ),
+         React.createElement(
+        "h3",
+        { className: "domoColor" },
+        " Color: ",
+        domo.color,
+        " "
+      ), 
     );
   });
 

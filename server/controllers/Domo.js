@@ -26,13 +26,17 @@ const settingsPage = (req, res) => {
 
 const makeDomo = (req, res) => {
   if (!req.body.name || !req.body.age || !req.body.home) {
-    return res.status(400).json({ error: 'Rawr! Both name, age, home are required' });
+    if (!req.body.eyes || !req.body.color || !req.body.horns) {
+      return res.status(400).json({ error: 'Rawr! All items required' });
+    }
   }
-
   const domoData = {
     name: req.body.name,
     age: req.body.age,
     home: req.body.home,
+    eyes: req.body.eyes,
+    horns: req.body.horns,
+    color: req.body.color,
     owner: req.session.account._id,
   };
   const newDomo = new Domo.DomoModel(domoData);

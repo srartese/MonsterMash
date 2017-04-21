@@ -37,6 +37,25 @@ const renderDomo = function() {
       <label htmlFor="home">Home Origin: </label>
       <input id="domoHome" type="text" name="home" placeholder="Home Origin" />
     
+      <div id="domoEyes">      
+        <label htmlFor="eyes">Eyes: </label>
+        <label><input type="radio" name="eyes" value="1" />One</label>
+        <label><input type="radio" name="eyes" value="3" />Three</label>
+      </div>
+    
+      <div id="domoHorns">      
+        <label htmlFor="horns">Horns: </label>
+        <label><input type="radio" name="horns" value="0" />None</label>
+        <label><input type="radio" name="horns" value="2" />Two</label>
+      </div>
+    
+     <div id="domoColor">      
+        <label htmlFor="color">Color: </label>
+        <label><input type="radio" name="color" value="Green" />Green</label>
+        <label><input type="radio" name="color" value="Orange" />Orange</label>
+        <label><input type="radio" name="color" value="Blue" />Blue</label>
+      </div>
+
       <input type="hidden" name="_csrf" value={this.props.csrf} />
       <input className="makeDomoSubmit" type="submit" value="Make Domo" />
     </form>
@@ -53,9 +72,15 @@ const renderDomoList = function() {
   }
 
   const domoNodes = this.state.data.map(function(domo) {
+     //check 
+       // <h3 className="domoEyes"> Eyes: {domo.eyes} </h3>
+      //  <h3 className="domoHorns"> Horns: {domo.horns} </h3>
+      //to which display image
+    const stringthing = "/assets/img/"+domo.color+domo.horns+domo.eyes+".png"
+
     return (
       <div key={domo._id} className="domo">
-        <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+       <img src={stringthing} alt="domo face" className="domoFace" />
         <h3 className="domoName"> Name: {domo.name} </h3>
         <h3 className="domoAge"> Age: {domo.age} </h3>
         <h3 className="domoHome"> Home: {domo.home} </h3>

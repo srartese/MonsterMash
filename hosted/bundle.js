@@ -1,16 +1,14 @@
-"use strict";
+let domoRenderer; // Domo Renderer component
+let domoForm; // Domo Add Form Render component
+let DomoFormClass; // Domo Form React UI class
+let DomoListClass; //Domo List React UI class
 
-var domoRenderer = void 0; //Domo Renderer component
-var domoForm = void 0; //Domo Add Form Render component
-var DomoFormClass = void 0; //Domo Form React UI class
-var DomoListClass = void 0; //Domo List React UI class
-
-var handleDomo = function handleDomo(e) {
+const handleDomo = e => {
   e.preventDefault();
 
   $("#domoMessage").animate({ width: 'hide' }, 350);
 
-  if ($("#domoName").val() == '' || $("#domoAge").val() == ''|| $("#domoHome").val() == '') {
+  if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoHome").val() == '') {
     handleError("RAWR! All fields are required");
     return false;
   }
@@ -22,7 +20,7 @@ var handleDomo = function handleDomo(e) {
   return false;
 };
 
-var renderDomo = function renderDomo() {
+const renderDomo = function () {
   return React.createElement(
     "form",
     { id: "domoForm",
@@ -42,21 +40,89 @@ var renderDomo = function renderDomo() {
       "label",
       { htmlFor: "age" },
       "Age: "
-    ),  
+    ),
     React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
-        
     React.createElement(
       "label",
       { htmlFor: "home" },
-      "Home: "
+      "Home Origin: "
     ),
-    React.createElement("input", { id: "domoHome", type: "text", name: "home", placeholder: "Domo Home" }),
+    React.createElement("input", { id: "domoHome", type: "text", name: "home", placeholder: "Home Origin" }),
+    React.createElement(
+      "div",
+      { id: "domoEyes" },
+      React.createElement(
+        "label",
+        { htmlFor: "eyes" },
+        "Eyes: "
+      ),
+      React.createElement(
+        "label",
+        null,
+        React.createElement("input", { type: "radio", name: "eyes", value: "1" }),
+        "One"
+      ),
+      React.createElement(
+        "label",
+        null,
+        React.createElement("input", { type: "radio", name: "eyes", value: "3" }),
+        "Three"
+      )
+    ),
+    React.createElement(
+      "div",
+      { id: "domoHorns" },
+      React.createElement(
+        "label",
+        { htmlFor: "horns" },
+        "Horns: "
+      ),
+      React.createElement(
+        "label",
+        null,
+        React.createElement("input", { type: "radio", name: "horns", value: "0" }),
+        "None"
+      ),
+      React.createElement(
+        "label",
+        null,
+        React.createElement("input", { type: "radio", name: "horns", value: "2" }),
+        "Two"
+      )
+    ),
+    React.createElement(
+      "div",
+      { id: "domoColor" },
+      React.createElement(
+        "label",
+        { htmlFor: "color" },
+        "Color: "
+      ),
+      React.createElement(
+        "label",
+        null,
+        React.createElement("input", { type: "radio", name: "color", value: "Green" }),
+        "Green"
+      ),
+      React.createElement(
+        "label",
+        null,
+        React.createElement("input", { type: "radio", name: "color", value: "Orange" }),
+        "Orange"
+      ),
+      React.createElement(
+        "label",
+        null,
+        React.createElement("input", { type: "radio", name: "color", value: "Blue" }),
+        "Blue"
+      )
+    ),
     React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
     React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
   );
 };
 
-var renderDomoList = function renderDomoList() {
+const renderDomoList = function () {
   if (this.state.data.length === 0) {
     return React.createElement(
       "div",
@@ -69,23 +135,22 @@ var renderDomoList = function renderDomoList() {
     );
   }
 
-  var domoNodes = this.state.data.map(function (domo) {
+  const domoNodes = this.state.data.map(function (domo) {
+    //check 
+    // <h3 className="domoEyes"> Eyes: {domo.eyes} </h3>
+    //  <h3 className="domoHorns"> Horns: {domo.horns} </h3>
+    //to which display image
+    const stringthing = "/assets/img/" + domo.color + domo.horns + domo.eyes + ".png";
+
     return React.createElement(
       "div",
       { key: domo._id, className: "domo" },
-      React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
+      React.createElement("img", { src: stringthing, alt: "domo face", className: "domoFace" }),
       React.createElement(
         "h3",
         { className: "domoName" },
         " Name: ",
         domo.name,
-        " "
-      ),   
-      React.createElement(
-        "h3",
-        { className: "domoHome" },
-        " Home: ",
-        domo.home,
         " "
       ),
       React.createElement(
@@ -93,6 +158,13 @@ var renderDomoList = function renderDomoList() {
         { className: "domoAge" },
         " Age: ",
         domo.age,
+        " "
+      ),
+      React.createElement(
+        "h3",
+        { className: "domoHome" },
+        " Home: ",
+        domo.home,
         " "
       )
     );
@@ -105,7 +177,7 @@ var renderDomoList = function renderDomoList() {
   );
 };
 
-var setup = function setup(csrf) {
+const setup = function (csrf) {
   DomoFormClass = React.createClass({
     displayName: "DomoFormClass",
 
@@ -116,15 +188,15 @@ var setup = function setup(csrf) {
   DomoListClass = React.createClass({
     displayName: "DomoListClass",
 
-    loadDomosFromServer: function loadDomosFromServer() {
+    loadDomosFromServer: function () {
       sendAjax('GET', '/getDomos', null, function (data) {
         this.setState({ data: data.domos });
       }.bind(this));
     },
-    getInitialState: function getInitialState() {
+    getInitialState: function () {
       return { data: [] };
     },
-    componentDidMount: function componentDidMount() {
+    componentDidMount: function () {
       this.loadDomosFromServer();
     },
     render: renderDomoList
@@ -135,8 +207,8 @@ var setup = function setup(csrf) {
   domoRenderer = ReactDOM.render(React.createElement(DomoListClass, null), document.querySelector("#domos"));
 };
 
-var getToken = function getToken() {
-  sendAjax('GET', '/getToken', null, function (result) {
+const getToken = () => {
+  sendAjax('GET', '/getToken', null, result => {
     setup(result.csrfToken);
   });
 };
@@ -144,19 +216,17 @@ var getToken = function getToken() {
 $(document).ready(function () {
   getToken();
 });
-"use strict";
-
-var handleError = function handleError(message) {
+const handleError = message => {
   $("#errorMessage").text(message);
   $("#domoMessage").animate({ width: 'toggle' }, 350);
 };
 
-var redirect = function redirect(response) {
+const redirect = response => {
   $("#domoMessage").animate({ width: 'hide' }, 350);
   window.location = response.redirect;
 };
 
-var sendAjax = function sendAjax(type, action, data, success) {
+const sendAjax = (type, action, data, success) => {
   $.ajax({
     cache: false,
     type: type,
@@ -164,7 +234,7 @@ var sendAjax = function sendAjax(type, action, data, success) {
     data: data,
     dataType: "json",
     success: success,
-    error: function error(xhr, status, _error) {
+    error: function (xhr, status, error) {
       var messageOBj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
