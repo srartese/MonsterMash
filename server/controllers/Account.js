@@ -73,10 +73,17 @@ const signup = (request, response) => {
       if (err.code === 110000) {
         return res.status(400).json({ error: 'Username already in use.' });
       }
-
-      return res.status(400).json({ error: 'Ann error occured' });
+      console.log(res);
+      return res.status(400).json({ error: 'An error occured' });
     });
   });
+};
+
+const getNoPage = (request, response) => {
+  const req = request;
+  const res = response;
+  
+  return res.status(400).json({ error: 'That page does not exist.' });
 };
 
 const getToken = (request, response) => {
@@ -95,3 +102,4 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.getNoPage = getNoPage;
