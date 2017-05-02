@@ -66,6 +66,8 @@ nav:nth-child(1) {
 .domoList { width: 70%; margin: 0 auto; }
 .domo { text-align: center;}
 #domoHorns {width: 100px; height: 100px; display: inline-block;margin: 10px;}
+
+#content {  background-image: url(img/start.png); background-repeat: no-repeat; margin: 0 auto; width: 500px;}
 #monpla {
   -moz-box-shadow:inset 0px 0px 15px 3px #3dc21b;
 	-webkit-box-shadow:inset 0px 0px 15px 3px #3dc21b;
