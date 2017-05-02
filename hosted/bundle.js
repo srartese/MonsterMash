@@ -255,7 +255,7 @@ const renderPassChange = function () {
 
 const setup = function (csrf) {
   //TO GET RANDOM THINGS FOR PLAYGROUND  
-  const colorarray = ["blue", "orange", "green"];
+  const colorarray = ["Blue", "Orange", "Green"];
   const eyearray = ["1", "3"];
   const hornarray = ["0", "2"];
   const namearray = ["Hoa", "Natacha", "Cornelia", "Leesa", "Laraine", "Shaunna", "Yen", "Joie", "Bulah", "Aisha", "Alysia", "Deandra", "Lorenzo", "Hillary", "Krista", "Theola", "Lulu", "Yesenia", "Rosetta", "Rosalia", "Cecilia", "Shaneka", "Zelma", "Mathilda", "Maranda", "Elza", "Dorthy", "Reginald", "Sherron", "Lyndsey"];

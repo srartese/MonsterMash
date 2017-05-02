@@ -82,7 +82,7 @@ const signup = (request, response) => {
 const password = (request, response) => {
   const req = request;
   const res = response;
-    
+
   req.body.username = `${req.session.account.username}`;
   req.body.pass0 = `${req.body.pass0}`;
   req.body.pass = `${req.body.pass}`;
@@ -117,7 +117,7 @@ const password = (request, response) => {
       savePromise.catch((saveErr) => {
         res.json(saveErr);
       });
-      
+
       return res.json({ redirect: '/maker' });
     });
   });
