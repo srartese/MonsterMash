@@ -119,7 +119,7 @@ const handlePassChange = (e) => {
   e.preventDefault();
 
   $("#domoMessage").animate({width:'hide'},350);
-  if( $("#pass0").val() == ''||$("#pass").val() == '' || $("#pass2").val() =='' ) {
+  if( $("#pass0").val() == '' || $("#pass").val() == '' || $("#pass2").val() =='' ) {
     handleError("RAWR! All fields are required");
     return false;
   }
@@ -128,9 +128,13 @@ const handlePassChange = (e) => {
     handleError("RAWR! Passwords do not match");
     return false;
   } 
-    //console.log($("input[name=_csrf]").val());
+  console.log($("input[name=_csrf]").val());
 
+    console.log($("#pass").val());
+    console.log($("#pass2").val());
+    console.log($("#pass0").val());
   sendAjax('POST', $("#changePassForm").attr("action"), $("#changePassForm").serialize(), redirect);
+  
   
   return false;
 };
@@ -154,7 +158,7 @@ const renderPassChange = function() {
           <label htmlFor="pass">New Password: </label>
           <input id="pass" type="password" name="pass" placeholder="new password" />
               <br />
-          <label htmlFor="pass">New Password: </label>
+          <label htmlFor="pass2">New Password: </label>
           <input id="pass2" type="password" name="pass2" placeholder="retype new password" />
                <br />
           <input type="hidden" name="_csrf" value={this.props.csrf} />
@@ -164,17 +168,6 @@ const renderPassChange = function() {
   </div>
   );
 };
-/*
-const createPasswordWindow = function(csrf) {
-  const PasswordWindow = React.createClass({
-    handlePassSubmit: handlePassChange,
-    render: renderPassChange
-  });
-  ReactDOM.render(
-      <PasswordWindow csrf={csrf} />, document.querySelector(".appmain")
-  );
-};
-*/
 
 const setup = function(csrf) {
       //TO GET RANDOM THINGS FOR PLAYGROUND  
@@ -317,7 +310,7 @@ const setup = function(csrf) {
     loadSettings: function(e){
     
       settingsRender = ReactDOM.render(
-      <SettingsClass />, document.querySelector(".appmain")
+      <SettingsClass csrf={csrf}/>, document.querySelector(".appmain")
       )
     }
   });

@@ -191,8 +191,11 @@ const handlePassChange = e => {
     handleError("RAWR! Passwords do not match");
     return false;
   }
-  //console.log($("input[name=_csrf]").val());
+  console.log($("input[name=_csrf]").val());
 
+  console.log($("#pass").val());
+  console.log($("#pass2").val());
+  console.log($("#pass0").val());
   sendAjax('POST', $("#changePassForm").attr("action"), $("#changePassForm").serialize(), redirect);
 
   return false;
@@ -234,7 +237,7 @@ const renderPassChange = function () {
       React.createElement("br", null),
       React.createElement(
         "label",
-        { htmlFor: "pass" },
+        { htmlFor: "pass2" },
         "New Password: "
       ),
       React.createElement("input", { id: "pass2", type: "password", name: "pass2", placeholder: "retype new password" }),
@@ -249,17 +252,6 @@ const renderPassChange = function () {
     )
   );
 };
-/*
-const createPasswordWindow = function(csrf) {
-  const PasswordWindow = React.createClass({
-    handlePassSubmit: handlePassChange,
-    render: renderPassChange
-  });
-  ReactDOM.render(
-      <PasswordWindow csrf={csrf} />, document.querySelector(".appmain")
-  );
-};
-*/
 
 const setup = function (csrf) {
   //TO GET RANDOM THINGS FOR PLAYGROUND  
@@ -482,7 +474,7 @@ const setup = function (csrf) {
     },
     loadSettings: function (e) {
 
-      settingsRender = ReactDOM.render(React.createElement(SettingsClass, null), document.querySelector(".appmain"));
+      settingsRender = ReactDOM.render(React.createElement(SettingsClass, { csrf: csrf }), document.querySelector(".appmain"));
     }
   });
 

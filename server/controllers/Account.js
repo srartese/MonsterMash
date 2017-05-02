@@ -84,7 +84,8 @@ const password = (request, response) => {
   const res = response;
     
   req.body.username = `${req.session.account.username}`;
-  req.body.pass = `${req.body.pass0}`;
+  req.body.pass0 = `${req.body.pass0}`;
+  req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
 
 
