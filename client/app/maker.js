@@ -67,7 +67,7 @@ const renderDomo = function() {
         <label><input type="radio" name="color" value="Blue" />Blue</label>
       </div>
       <input type="hidden" name="_csrf" value={this.props.csrf} />
-      <input className="makeDomoSubmit" type="submit" value="Make Domo" />
+      <input className="makeDomoSubmit" type="submit" value="Make Monster" />
       </div>
     
     </form>

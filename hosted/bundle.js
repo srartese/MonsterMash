@@ -131,7 +131,7 @@ const renderDomo = function () {
         )
       ),
       React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
-      React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+      React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Monster" })
     )
   );
 };
