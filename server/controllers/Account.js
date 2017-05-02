@@ -79,11 +79,47 @@ const signup = (request, response) => {
   });
 };
 
-const getNoPage = (request, response) => {
+const password = (request, response) => {
   const req = request;
   const res = response;
-  
-  return res.status(400).json({ error: 'That page does not exist.' });
+    
+  req.body.username = `${req.session.account.username}`;
+  req.body.pass = `${req.body.pass0}`;
+  req.body.pass2 = `${req.body.pass2}`;
+
+
+  if (!req.body.pass || !req.body.pass2) {
+    return res.status(400).json({ error: 'Rawr! All fields are required.' });
+  }
+
+  if (req.body.pass !== req.body.pass2) {
+    return res.status(400).json({ error: 'RAWR! Passwords do not match' });
+  }
+
+  return Account.AccountModel.authenticate(req.body.username, req.body.pass, (err, account) => {
+    if (err || !account) {
+      return res.status(401).json({ error: 'Incorrect Username and Password' });
+    }
+
+    const updateAccount = account;
+
+    return Account.AccountModel.generateHash(req.body.pass2, (salt, hash) => {
+      updateAccount.password = hash;
+      updateAccount.salt = salt;
+
+      const savePromise = updateAccount.save();
+
+      savePromise.then(() => res.json({
+        password: updateAccount.password,
+      }));
+
+      savePromise.catch((saveErr) => {
+        res.json(saveErr);
+      });
+      
+      return res.json({ redirect: '/maker' });
+    });
+  });
 };
 
 const getToken = (request, response) => {
@@ -102,4 +138,4 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
-module.exports.getNoPage = getNoPage;
+module.exports.password = password;

@@ -7,8 +7,11 @@ html, body {
 }
 .appmain {
   background-image: url(img/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
   text-align: center;
+  padding-bottom: 5%;
 }
 #logo {
     height: 40px;

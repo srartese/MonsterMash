@@ -1,55 +1,8 @@
 const models = require('../models');
 const Domo = models.Domo;
-const Account = models.Account;
 
 
-const password = (request, response) => {
-  const req = request;
-  const res = response;
-
-//  // cast to strings to cover up some security flaws
-//  req.body.username = `${req.body.username}`;
-//  req.body.pass = `${req.body.pass}`;
-//  req.body.pass2 = `${req.body.pass2}`;
-//
-//  if (!req.body.username || !req.body.pass || !req.body.pass2) {
-//    return res.status(400).json({ error: 'RAWR! All fields are required' });
-//  }
-//
-//  if (req.body.pass !== req.body.pass2) {
-//    return res.status(400).json({ error: 'RAWR! Passwords do not match' });
-//  }
-//
-//  return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
-//    const accountData = {
-//      username: req.body.username,
-//      salt,
-//      password: hash,
-//    };
-//
-//    const newAccount = new Account.AccountModel(accountData);
-//
-//    const savePromise = newAccount.save();
-//
-//    savePromise.then(() => {
-//      req.session.account = Account.AccountModel.toAPI(newAccount);
-      return res.json({ redirect: '/maker' });
-    //});
-
-//    savePromise.catch((err) => {
-//      console.log(err);
-//
-//      if (err.code === 110000) {
-//        return res.status(400).json({ error: 'Username already in use.' });
-//      }
-      console.log("asdasd" + res);
-      //return res.status(400).json({ error: 'An error occured' });
-    //});
-  //});
-};
-
-
-//MAKER PAGE TO MAKE MONSTERS
+// MAKER PAGE TO MAKE MONSTERS
 const makerPage = (req, res) => {
   Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -61,15 +14,13 @@ const makerPage = (req, res) => {
   });
 };
 
-//MAKE MONSTER
+// MAKE MONSTER
 const makeDomo = (req, res) => {
-  if (!req.body.name || !req.body.age || !req.body.home) {
-      return res.status(400).json({ error: 'Rawr! All items required' });
-    
+  if (!req.body.name || !req.body.age ||
+      !req.body.home || !req.body.eyes ||
+      !req.body.horns || !req.body.color) {
+    return res.status(400).json({ error: 'Rawr! All fields are required.' });
   }
-  if (!req.body.eyes || !req.body.color || !req.body.horns) {
-      return res.status(400).json({ error: 'Rawr! All items required' });
-    }
   const domoData = {
     name: req.body.name,
     age: req.body.age,
@@ -113,4 +64,3 @@ const getDomos = (request, response) => {
 module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
 module.exports.make = makeDomo;
-module.exports.password = password;

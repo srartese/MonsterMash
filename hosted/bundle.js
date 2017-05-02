@@ -9,10 +9,10 @@ let PlaygroundClass;
 let navRender;
 let NavClass;
 let settingsRender;
+let PasswordWindow;
 
 const handleDomo = e => {
   e.preventDefault();
-
   $("#domoMessage").animate({ width: 'hide' }, 350);
 
   if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoHome").val() == '') {
@@ -21,8 +21,8 @@ const handleDomo = e => {
   }
 
   sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
-    domoRenderer.loadDomosFromServer();
-    //not a function?
+    //domoRenderer.loadDomosFromServer();
+    domoRenderer.dynam();
   });
 
   return false;
@@ -177,63 +177,89 @@ const renderDomoList = function () {
   );
 };
 
-/*const handlePassChange = (e) => {
+//HANDLES THE VALIDATION OF PASSWORD CHANGE FORM
+const handlePassChange = e => {
   e.preventDefault();
 
-  $("#domoMessage").animate({width:'hide'},350);
-
-  if($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() =='' ) {
+  $("#domoMessage").animate({ width: 'hide' }, 350);
+  if ($("#pass0").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
     handleError("RAWR! All fields are required");
     return false;
   }
 
-  if($("#pass").val() !== $("#pass2").val()) {
+  if ($("#pass").val() !== $("#pass2").val()) {
     handleError("RAWR! Passwords do not match");
     return false;
   }
+  //console.log($("input[name=_csrf]").val());
 
-
-  sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+  sendAjax('POST', $("#changePassForm").attr("action"), $("#changePassForm").serialize(), redirect);
 
   return false;
-};*/
+};
 
-/*const renderPassChange = function() {
-  return (
-  <div>
-      <h1> Account Password Reset</h1>
-      <form id="changePassForm"
-      name="changePassForm"
-      onSubmit={this.handlepasssub}
-      method="POST"
-      className="changePassForm"
-    >
-      <label htmlFor="pass">Password: </label>
-      <input id="pass" type="password" name="pass" placeholder="current password" /> 
-      <label htmlFor="pass">Password: </label>
-      <input id="pass" type="password" name="pass" placeholder="new password" />
-      <label htmlFor="pass">Password: </label>
-      <input id="pass2" type="password" name="pass2" placeholder="retype new password" />
-      <input type="hidden" name="_csrf" value={this.props.csrf} />
-      <input className="passSubmit" type="submit" value="Change Password" />
-    </form>
-        <a href="/maker"> Back to Monsters </a>
-      </div>
+//RENDER PASSWORD CHANGE FORM
+const renderPassChange = function () {
+  return React.createElement(
+    "div",
+    null,
+    React.createElement(
+      "h1",
+      { className: "deh1" },
+      " Account Password Reset"
+    ),
+    React.createElement(
+      "form",
+      { id: "changePassForm",
+        name: "changePassForm",
+        onSubmit: this.handlePassSubmit,
+        action: "/password",
+        method: "POST",
+        className: "changePassForm"
+      },
+      React.createElement(
+        "label",
+        { htmlFor: "pass0" },
+        "Current Password: "
+      ),
+      React.createElement("input", { id: "pass0", type: "password", name: "pass", placeholder: "current password" }),
+      React.createElement("br", null),
+      React.createElement("br", null),
+      React.createElement(
+        "label",
+        { htmlFor: "pass" },
+        "New Password: "
+      ),
+      React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "new password" }),
+      React.createElement("br", null),
+      React.createElement(
+        "label",
+        { htmlFor: "pass" },
+        "New Password: "
+      ),
+      React.createElement("input", { id: "pass2", type: "password", name: "pass2", placeholder: "retype new password" }),
+      React.createElement("br", null),
+      React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
+      React.createElement("input", { className: "passSubmit", type: "submit", value: "Change Password" })
+    ),
+    React.createElement(
+      "a",
+      { href: "/maker" },
+      " Back to Monsters "
+    )
   );
-};*/
-
-//GET DATABASE ACCOUNT DATA
-/*const getAccData = (req, res) => {
-  const username = req.query.id;
-  const callback = (err, doc) => {
-    if (err) {
-      return res.json({ err }); // if error, return it
-    }
-
-    return res.json(doc);
-  };
-  Account.findByUsername(username, callback);
-};*/
+};
+/*
+const createPasswordWindow = function(csrf) {
+  const PasswordWindow = React.createClass({
+    handlePassSubmit: handlePassChange,
+    render: renderPassChange
+  });
+  ReactDOM.render(
+      <PasswordWindow csrf={csrf} />, document.querySelector(".appmain")
+  );
+};
+*/
 
 const setup = function (csrf) {
   //TO GET RANDOM THINGS FOR PLAYGROUND  
@@ -292,56 +318,8 @@ const setup = function (csrf) {
   SettingsClass = React.createClass({
     displayName: "SettingsClass",
 
-    render: function () {
-      return React.createElement(
-        "div",
-        null,
-        React.createElement(
-          "h1",
-          { className: "deh1" },
-          " Account Password Reset"
-        ),
-        React.createElement(
-          "form",
-          { id: "changePassForm",
-            name: "changePassForm",
-            onSubmit: this.handlePassSubmit,
-            action: "/password",
-            method: "POST",
-            className: "changePassForm"
-          },
-          React.createElement(
-            "label",
-            { htmlFor: "pass0" },
-            "Current Password: "
-          ),
-          React.createElement("input", { id: "pass0", type: "password", name: "pass", placeholder: "current password" }),
-          React.createElement("br", null),
-          React.createElement("br", null),
-          React.createElement(
-            "label",
-            { htmlFor: "pass" },
-            "New Password: "
-          ),
-          React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "new password" }),
-          React.createElement("br", null),
-          React.createElement(
-            "label",
-            { htmlFor: "pass" },
-            "New Password: "
-          ),
-          React.createElement("input", { id: "pass2", type: "password", name: "pass2", placeholder: "retype new password" }),
-          React.createElement("br", null),
-          React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
-          React.createElement("input", { className: "passSubmit", type: "submit", value: "Change Password" })
-        ),
-        React.createElement(
-          "a",
-          { href: "/maker" },
-          " Back to Monsters "
-        )
-      );
-    }
+    handlePassSubmit: handlePassChange,
+    render: renderPassChange
   });
 
   //When you click a single monster you get details
@@ -473,13 +451,16 @@ const setup = function (csrf) {
   MakerClass = React.createClass({
     displayName: "MakerClass",
 
+    dynam: function () {
+      this.refs.listChild.loadDomosFromServer();
+    },
     render: function () {
       return React.createElement(
         "div",
         null,
         React.createElement(DomoFormClass, { csrf: csrf }),
         ",",
-        React.createElement(DomoListClass, null),
+        React.createElement(DomoListClass, { ref: "listChild" }),
         React.createElement("input", { value: "Get Inspired!", onClick: this.loadPlayground, name: "inspiration", type: "button", id: "monpla" })
       );
     },
@@ -513,6 +494,7 @@ const setup = function (csrf) {
 const getToken = () => {
   sendAjax('GET', '/getToken', null, result => {
     setup(result.csrfToken);
+    //console.log(result.csrfToken);
   });
 };
 
@@ -538,7 +520,7 @@ const sendAjax = (type, action, data, success) => {
     dataType: "json",
     success: success,
     error: function (xhr, status, error) {
-      var messageOBj = JSON.parse(xhr.responseText);
+      var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
   });
