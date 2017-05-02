@@ -225,7 +225,7 @@ const renderPassChange = function () {
         { htmlFor: "pass0" },
         "Current Password: "
       ),
-      React.createElement("input", { id: "pass0", type: "password", name: "pass", placeholder: "current password" }),
+      React.createElement("input", { id: "pass0", type: "password", name: "pass0", placeholder: "current password" }),
       React.createElement("br", null),
       React.createElement("br", null),
       React.createElement(

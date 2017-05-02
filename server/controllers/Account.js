@@ -88,6 +88,9 @@ const password = (request, response) => {
   req.body.pass = `${req.body.pass}`;
   req.body.pass2 = `${req.body.pass2}`;
 
+  console.dir(req.body.pass0);
+  console.dir(req.body.pass);
+  console.dir(req.body.pass2);
 
   if (!req.body.pass || !req.body.pass2) {
     return res.status(400).json({ error: 'Rawr! All fields are required.' });
@@ -97,7 +100,7 @@ const password = (request, response) => {
     return res.status(400).json({ error: 'RAWR! Passwords do not match' });
   }
 
-  return Account.AccountModel.authenticate(req.body.username, req.body.pass, (err, account) => {
+  return Account.AccountModel.authenticate(req.body.username, req.body.pass0, (err, account) => {
     if (err || !account) {
       return res.status(401).json({ error: 'Incorrect Username and Password' });
     }
@@ -111,14 +114,14 @@ const password = (request, response) => {
       const savePromise = updateAccount.save();
 
       savePromise.then(() => res.json({
-        password: updateAccount.password,
+        redirect: '/maker',
       }));
 
       savePromise.catch((saveErr) => {
         res.json(saveErr);
       });
 
-      return res.json({ redirect: '/maker' });
+//      return res.json({ redirect: '/maker' });
     });
   });
 };

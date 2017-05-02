@@ -152,7 +152,7 @@ const renderPassChange = function() {
             className="changePassForm"
           >
           <label htmlFor="pass0">Current Password: </label>
-          <input id="pass0" type="password" name="pass" placeholder="current password" /> 
+          <input id="pass0" type="password" name="pass0" placeholder="current password" /> 
             <br />
             <br />
           <label htmlFor="pass">New Password: </label>
