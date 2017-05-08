@@ -114,20 +114,44 @@ const renderDomo = function () {
         React.createElement(
           "label",
           null,
-          React.createElement("input", { type: "radio", name: "color", value: "Green" }),
-          "Green"
-        ),
-        React.createElement(
-          "label",
-          null,
           React.createElement("input", { type: "radio", name: "color", value: "Orange" }),
           "Orange"
         ),
         React.createElement(
           "label",
           null,
+          React.createElement("input", { type: "radio", name: "color", value: "Green" }),
+          "Green"
+        ),
+        React.createElement(
+          "label",
+          null,
+          React.createElement("input", { type: "radio", name: "color", value: "Purple" }),
+          "Purple"
+        ),
+        React.createElement(
+          "label",
+          null,
+          React.createElement("input", { type: "radio", name: "color", value: "Yellow" }),
+          "Yellow"
+        ),
+        React.createElement(
+          "label",
+          null,
           React.createElement("input", { type: "radio", name: "color", value: "Blue" }),
           "Blue"
+        ),
+        React.createElement(
+          "label",
+          null,
+          React.createElement("input", { type: "radio", name: "color", value: "Pink" }),
+          "Pink"
+        ),
+        React.createElement(
+          "label",
+          null,
+          React.createElement("input", { type: "radio", name: "color", value: "Weird" }),
+          "Weird"
         )
       ),
       React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
@@ -255,12 +279,14 @@ const renderPassChange = function () {
 
 const setup = function (csrf) {
   //TO GET RANDOM THINGS FOR PLAYGROUND  
-  const colorarray = ["Blue", "Orange", "Green"];
+  const colorarray = ["Blue", "Orange", "Green", "Purple", "Pink", "Weird", "Yellow"];
   const eyearray = ["1", "3"];
   const hornarray = ["0", "2"];
   const namearray = ["Hoa", "Natacha", "Cornelia", "Leesa", "Laraine", "Shaunna", "Yen", "Joie", "Bulah", "Aisha", "Alysia", "Deandra", "Lorenzo", "Hillary", "Krista", "Theola", "Lulu", "Yesenia", "Rosetta", "Rosalia", "Cecilia", "Shaneka", "Zelma", "Mathilda", "Maranda", "Elza", "Dorthy", "Reginald", "Sherron", "Lyndsey"];
 
   const activityarray = ["try to type names with eyes closed.", "lick elbows.", "hug as many people as possible in a minute.", "watch movies", "help old people cross the road", "bake cookies", "color", "program cool things", "do hair", "use Socks As Nunchucks.", "draw pictures in total darkness and see how they turn out.", "build forts.", "go on walks.", "make blankets.", "sleep.", "eat.", "learn new things.", "tell jokes"];
+
+  const hangout = ["Library", "Park", "Local Coffee Shop", "Mountain Tops", "Woods", "Groccery Store"];
 
   var randcolor = colorarray[Math.floor(Math.random() * colorarray.length)];
   var randeye = eyearray[Math.floor(Math.random() * eyearray.length)];
@@ -268,6 +294,8 @@ const setup = function (csrf) {
   var randname = namearray[Math.floor(Math.random() * namearray.length)];
   var randactivity = activityarray[Math.floor(Math.random() * activityarray.length)];
   const alldomo = "/assets/img/" + randcolor + randhorn + randeye + ".png";
+
+  var randhang = hangout[Math.floor(Math.random() * hangout.length)];
 
   // Creative Playground
   PlaygroundClass = React.createClass({
@@ -364,7 +392,14 @@ const setup = function (csrf) {
           { className: "domoHorns" },
           " Horns: ",
           this.props.monsterhorns,
-          " "
+          "  "
+        ),
+        React.createElement(
+          "h3",
+          { className: "hangout" },
+          " Loves the ",
+          randhang,
+          "!"
         ),
         React.createElement(
           "a",

@@ -62,9 +62,14 @@ const renderDomo = function() {
       </div>
      <div id="domoColor">      
         <label htmlFor="color">Color: </label>
-        <label><input type="radio" name="color" value="Green" />Green</label>
         <label><input type="radio" name="color" value="Orange" />Orange</label>
+     <label><input type="radio" name="color" value="Green" />Green</label>
+        <label><input type="radio" name="color" value="Purple" />Purple</label>
+        <label><input type="radio" name="color" value="Yellow" />Yellow</label>
         <label><input type="radio" name="color" value="Blue" />Blue</label>
+        <label><input type="radio" name="color" value="Pink" />Pink</label>
+        <label><input type="radio" name="color" value="Weird" />Weird</label>
+    
       </div>
       <input type="hidden" name="_csrf" value={this.props.csrf} />
       <input className="makeDomoSubmit" type="submit" value="Make Monster" />
@@ -171,19 +176,24 @@ const renderPassChange = function() {
 
 const setup = function(csrf) {
       //TO GET RANDOM THINGS FOR PLAYGROUND  
-    const colorarray = ["Blue", "Orange", "Green"];
+    const colorarray = ["Blue", "Orange", "Green", "Purple", "Pink", "Weird", "Yellow"];
       const eyearray = ["1", "3"];
       const hornarray = ["0", "2"];
       const namearray = ["Hoa", "Natacha", "Cornelia","Leesa","Laraine","Shaunna", "Yen","Joie","Bulah","Aisha","Alysia","Deandra","Lorenzo","Hillary","Krista","Theola","Lulu","Yesenia","Rosetta","Rosalia","Cecilia","Shaneka","Zelma","Mathilda","Maranda","Elza","Dorthy","Reginald","Sherron","Lyndsey"];
       
       const activityarray = ["try to type names with eyes closed.", "lick elbows.", "hug as many people as possible in a minute.", "watch movies", "help old people cross the road", "bake cookies", "color", "program cool things", "do hair", "use Socks As Nunchucks.", "draw pictures in total darkness and see how they turn out.", "build forts.", "go on walks.", "make blankets.", "sleep.", "eat.", "learn new things.", "tell jokes"];
 
+      const hangout = ["Library", "Park", "Local Coffee Shop", "Mountain Tops", "Woods", "Groccery Store"];
+      
+      
       var randcolor = colorarray[Math.floor(Math.random() * colorarray.length)];
       var randeye = eyearray[Math.floor(Math.random() * eyearray.length)];
       var randhorn = hornarray[Math.floor(Math.random() * hornarray.length)];
       var randname = namearray[Math.floor(Math.random() * namearray.length)];
       var randactivity = activityarray[Math.floor(Math.random() * activityarray.length)];
-      const alldomo = "/assets/img/"+randcolor+randhorn+randeye+".png"
+      const alldomo = "/assets/img/"+randcolor+randhorn+randeye+".png";
+  
+   var randhang = hangout[Math.floor(Math.random() * hangout.length)];
   
   // Creative Playground
   PlaygroundClass = React.createClass({
@@ -221,7 +231,8 @@ const setup = function(csrf) {
           <h3 className="domoHome"> Home: {this.props.domohome} </h3>
           <h3 className="domoColor"> Color: {this.props.monstercolor} </h3>
           <h3 className="domoEyes"> Eyes: {this.props.monstereyes} </h3>
-          <h3 className="domoHorns"> Horns: {this.props.monsterhorns} </h3>
+          <h3 className="domoHorns"> Horns: {this.props.monsterhorns}  </h3>
+        <h3 className="hangout"> Loves the {randhang}!</h3>
                   <a href="/maker"> Back to Monsters </a>
       </div>
     )
