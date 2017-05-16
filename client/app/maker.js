@@ -9,7 +9,11 @@ let PlaygroundClass;
 let navRender;
 let NavClass;
 let settingsRender;
-let PasswordWindow;
+//let PasswordWindow;
+//let PremiumClass;
+
+const factlist = ["Cheese is a vegetable.", "Monsters never go inside trains.", "Most monsters prefer to be naked.", "Never trust candy from friends.", "Water is poison.", "The internet is real life.", "Snapple facts, yes.", "Fish are friends.", "The moon is God's secuirty camera.", "If you smell roses you smell flowers.", "Magicians are liars.", "Tie your shoes one at a time.", "Eat food off the floor regularly.", "Healthy is a mere idea.", "Clocks are subjective", "Time is illusion.", "Triangles are angry squares.", "Learning is educational.", "Sharks are dinosaurs.", "Pools are bathtubs.", "People with two first names are liars.","Bears.Beats.Battlestar Galactica.", "Fruits are meat."];
+
 
 
 const handleDomo = (e) => {
@@ -26,12 +30,25 @@ const handleDomo = (e) => {
     //domoRenderer.loadDomosFromServer();
     domoRenderer.dynam();
   });
+    
+domoRenderer = ReactDOM.render(
+   <MakerClass />, document.querySelector(".appmain")
+   )  
+   return false;
+};
+
+const handlerando = () => {  
   
-  return false;
+  const randfact = factlist[Math.floor(Math.random() * factlist.length)];
+  //console.dir(randfact);
+
+  return randfact;
 };
 
 const renderDomo = function() {
-  return (
+   const rando = handlerando();
+ // console.dir(rando);
+  return (  
     <form id="domoForm"
       onSubmit={this.handleSubmit}
       name="domoForm"
@@ -69,8 +86,12 @@ const renderDomo = function() {
         <label><input type="radio" name="color" value="Blue" />Blue</label>
         <label><input type="radio" name="color" value="Pink" />Pink</label>
         <label><input type="radio" name="color" value="Weird" />Weird</label>
-    
       </div>
+      
+    <div id="monsterFact"> 
+      <input type="hidden" name="fact" value={rando} />
+    </div>
+    
       <input type="hidden" name="_csrf" value={this.props.csrf} />
       <input className="makeDomoSubmit" type="submit" value="Make Monster" />
       </div>
@@ -90,12 +111,7 @@ const renderDomoList = function() {
   
   const listScope = this;
   const domoNodes = this.state.data.map(function(domo) {
-     //check 
-       // <h3 className="domoEyes"> Eyes: {domo.eyes} </h3>
-      //  <h3 className="domoHorns"> Horns: {domo.horns} </h3>
-      //to which display imag
     const stringthing = "/assets/img/"+domo.color+domo.horns+domo.eyes+".png"
-
     return (
         <MonsterClass 
           domoid={domo._id} 
@@ -106,6 +122,7 @@ const renderDomoList = function() {
           monstercolor={domo.color}
           monsterhorns={domo.horns}
           monstereyes={domo.eyes}
+          monsterfact={domo.fact}
           key={domo._id}
           />
     );
@@ -118,6 +135,7 @@ const renderDomoList = function() {
     </div>
   );
 };
+
 
 //HANDLES THE VALIDATION OF PASSWORD CHANGE FORM
 const handlePassChange = (e) => {
@@ -149,6 +167,7 @@ const renderPassChange = function() {
   return (
   <div>
        <h1 className="deh1"> Account Password Reset</h1>
+    <div className="premdesc">
           <form id="changePassForm"
             name="changePassForm"
             onSubmit={this.handlePassSubmit}
@@ -164,12 +183,36 @@ const renderPassChange = function() {
           <input id="pass" type="password" name="pass" placeholder="new password" />
               <br />
           <label htmlFor="pass2">New Password: </label>
-          <input id="pass2" type="password" name="pass2" placeholder="retype new password" />
+          <input id="pass2" type="password" name="pass2" placeholder="retype password" />
                <br />
           <input type="hidden" name="_csrf" value={this.props.csrf} />
           <input className="passSubmit" type="submit" value="Change Password" />
-        </form>
+        </form> 
+    </div>
         <a href="/maker"> Back to Monsters </a>
+  </div>
+  );
+};
+
+
+//RENDER PREMIUM Page
+const renderPremium = function() {
+  return (
+  <div>
+       <h1 className="premm"> Got Premium? </h1>
+    <div className="premdesc">
+    <h2> Why? </h2>
+    <p> The more monsters to make the more creative you get! Premium allows you to create more monster with more options. This means you a able to actually try and collect all the facts. You have taken a step towards stretching your mind, why take a step back and give up now?</p>
+  <ul> 
+      <li> More Options </li>
+      <li> More Monsters </li>
+      <li> More Facts </li>
+      <li> More Fun </li>
+      <li> Better Mental Health </li>
+    </ul>
+    <h3> Stick around with us! </h3>
+    <img src="/assets/img/Purple23.png" alt="monster" className="monstex" />
+  </div>
   </div>
   );
 };
@@ -185,15 +228,19 @@ const setup = function(csrf) {
 
       const hangout = ["Library", "Park", "Local Coffee Shop", "Mountain Tops", "Woods", "Groccery Store"];
       
+      //const compliment = ["You are beautiful.", "You are doing great!", "Don't give up.", "You are a star","It gets easier", "It gets better.", "People love you.", "Great job!"];
       
       var randcolor = colorarray[Math.floor(Math.random() * colorarray.length)];
       var randeye = eyearray[Math.floor(Math.random() * eyearray.length)];
       var randhorn = hornarray[Math.floor(Math.random() * hornarray.length)];
       var randname = namearray[Math.floor(Math.random() * namearray.length)];
       var randactivity = activityarray[Math.floor(Math.random() * activityarray.length)];
+      
+  
       const alldomo = "/assets/img/"+randcolor+randhorn+randeye+".png";
   
    var randhang = hangout[Math.floor(Math.random() * hangout.length)];
+
   
   // Creative Playground
   PlaygroundClass = React.createClass({
@@ -218,6 +265,11 @@ const setup = function(csrf) {
         render: renderPassChange
   });
   
+    //Settings for the account password change
+  PremiumClass = React.createClass({
+      render: renderPremium
+
+  });
   
   //When you click a single monster you get details
   DetailsClass = React.createClass({
@@ -226,14 +278,16 @@ const setup = function(csrf) {
       <div className="details">
         <h1 className="deh1"> Meet  {this.props.domoname}! </h1>
          <img src={this.props.stringthing} alt="domo face" className="monmeet"/>
-        <br />
+        <br />           
+          <h3 className="monsterFact"> {this.props.monsterfact} </h3>
           <h3 className="monsterage"> Age: {this.props.domoage} </h3>
           <h3 className="domoHome"> Home: {this.props.domohome} </h3>
           <h3 className="domoColor"> Color: {this.props.monstercolor} </h3>
           <h3 className="domoEyes"> Eyes: {this.props.monstereyes} </h3>
           <h3 className="domoHorns"> Horns: {this.props.monsterhorns}  </h3>
-        <h3 className="hangout"> Loves the {randhang}!</h3>
-                  <a href="/maker"> Back to Monsters </a>
+          <h3 className="hangout"> Loves the {randhang}!</h3>
+                               
+          <a href="/maker"> Back to Monsters </a>
       </div>
     )
     }
@@ -245,6 +299,7 @@ const setup = function(csrf) {
       <div className="domo">
         <input value='View Monster' onClick={this.loadthings} name={this.props.domoid} type='button' id="monbtt"/>
          <img src={this.props.stringthing} alt="domo face" className="domoFace" />
+          <h3 className="monsterFact"> {this.props.domoname}'s Fun Fact: '{this.props.monsterfact}' </h3>
           <h3 className="domoName"> Name: {this.props.domoname} </h3>
           <h3 className="domoAge"> Age: {this.props.domoage} </h3>
       </div>
@@ -263,6 +318,7 @@ const setup = function(csrf) {
             monstereyes= {this.props.monstereyes}
             monstercolor= {this.props.monstercolor}
             monsterhorns= {this.props.monsterhorns}
+            monsterfact= {this.props.monsterfact}
         />, document.querySelector(".appmain")
       )
     }
@@ -297,7 +353,7 @@ const setup = function(csrf) {
         <div>
       <DomoFormClass csrf={csrf} />,
       <DomoListClass ref="listChild"/>
-        <input value='Get Inspired!' onClick={this.loadPlayground} name="inspiration" type='button' id="monpla"/>  
+        <input value='Get Inspired!' onClick={this.loadPlayground} name="inspiration" type='button' id="monpla"/>   
         </div>
         )
     },
@@ -314,7 +370,7 @@ const setup = function(csrf) {
       return (  
         <div>
           <input value='Settings' onClick={this.loadSettings} name="settings" type='button' id="setbut"/>  
-
+        <input value='Premium' onClick={this.loadPremium} name="premium" type='button' id="setbut"/> 
         </div>
       )   
     },
@@ -322,6 +378,14 @@ const setup = function(csrf) {
     
       settingsRender = ReactDOM.render(
       <SettingsClass csrf={csrf}/>, document.querySelector(".appmain")
+        
+      )
+    },
+    loadPremium: function(e){
+    
+      premiumRender = ReactDOM.render(
+      <PremiumClass csrf={csrf}/>, document.querySelector(".appmain")
+        
       )
     }
   });

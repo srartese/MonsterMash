@@ -4,11 +4,11 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-}
-.appmain {
   background-image: url(img/background.png);
   background-repeat: no-repeat;
   background-size: cover;
+}
+.appmain {
   height: 100%;
   text-align: center;
   padding-bottom: 5%;
@@ -27,9 +27,14 @@ nav {
     background-color: #61E294;
 }
 
-#setbut { background-color: #61E294; border: none;  color: white;
-    font-size: 1em;}
-.navadd {display: inline-block;}
+#setbut { background-color: #61E294;
+  border: none;  color: white;
+    font-size: 1em;
+  box-shadow: none;
+}
+#setbut:hover {cursor: pointer;}
+#setbut:focus {box-shadow: none; border: none;outline: none;}
+.navadd { display: inline-block;}
 
 nav:nth-child(1) {
     padding-left: 25px;
@@ -67,7 +72,17 @@ nav:nth-child(1) {
 .domo { text-align: center;}
 #domoHorns {width: 100px; height: 100px; display: inline-block;margin: 10px;}
 
-#content {  background-image: url(img/start.png); background-repeat: no-repeat; margin: 0 auto; width: 500px;}
+.premm {margin-top:0px; color: #611C35; padding: 0; }
+.aboutdesc { width: 750px; color: #2E5077; background-color: rgba(242, 244, 243,.75);padding: 10px; border-radius: 10px; margin:5% 60% 25px 0; letter-spacing: .06em;}
+.monstex { height: 60px; width: auto; display: block; text-align: center; margin: 0 auto;}
+
+.premdesc { width: 750px; color: #2E5077; background-color: rgba(242, 244, 243,.75);padding: 10px; border-radius: 10px; margin:5% auto 25px auto; letter-spacing: .06em; text-align: center;}
+.premdesc p {font-size: 1.2em;}
+ul {margin: 0 auto; font-size: 1.1em; width: 25%;}
+ul li{ text-align:left;}
+
+#content h2 { margin-left: -130px; margin-top:8%;}
+  #content {  background-image: url(img/start.png); background-repeat: no-repeat; margin: 0 auto; width: 500px; }
 #monpla {
   -moz-box-shadow:inset 0px 0px 15px 3px #3dc21b;
 	-webkit-box-shadow:inset 0px 0px 15px 3px #3dc21b;
@@ -145,6 +160,7 @@ background-color:transparent;
 .makeDomoSubmit {
     transition: background-color 0.4s ease;
     display: inline;
+  font-size: 11px;
     width: 90px;
     background-color: #9799CA;
     border-radius: 2px;

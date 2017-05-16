@@ -1,3 +1,7 @@
+let NavClass;
+let navRender;
+let aboutRender;
+
 const handleLogin = e => {
   e.preventDefault();
 
@@ -104,6 +108,7 @@ const createLoginWindow = function (csrf) {
 };
 
 const createSignupWindow = function (csrf) {
+  console.dir("click");
   const SignupWindow = React.createClass({
     displayName: "SignupWindow",
 
@@ -112,6 +117,26 @@ const createSignupWindow = function (csrf) {
   });
 
   ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#content"));
+};
+
+//RENDER PREMIUM Page
+const renderAbout = function () {
+  return React.createElement(
+    "div",
+    null,
+    React.createElement(
+      "h2",
+      { className: "aboutdesc" },
+      React.createElement("br", null),
+      "Enter into a creative space where you challenge the possibilities of the monster world.  Everyday we run the regular work flow and forget to strech our minds.  Create a monster friend how you want and learn some fun facts along the way.  Each monster might give you a brand new perspective. How many facts can you collect?",
+      React.createElement("br", null),
+      React.createElement("br", null),
+      "Monster Mash is meant to open your mind and build an open environment to enhace creativity.  If children can imagine, what is stopping you?",
+      React.createElement("br", null),
+      React.createElement("br", null),
+      React.createElement("img", { src: "/assets/img/Pink03.png", alt: "monster", className: "monstex" })
+    )
+  );
 };
 
 const setup = function (csrf) {
@@ -129,6 +154,30 @@ const setup = function (csrf) {
     createLoginWindow(csrf);
     return false;
   });
+
+  //Settings for the account password change
+  AboutClass = React.createClass({
+    displayName: "AboutClass",
+
+    render: renderAbout
+  });
+
+  NavClass = React.createClass({
+    displayName: "NavClass",
+
+    render: function () {
+      return React.createElement(
+        "div",
+        null,
+        React.createElement("input", { value: "About", onClick: this.loadAbout, name: "about", type: "button", id: "setbut" })
+      );
+    },
+    loadAbout: function (e) {
+      aboutRender = ReactDOM.render(React.createElement(AboutClass, null), document.querySelector("#content"));
+    }
+  });
+
+  navRender = ReactDOM.render(React.createElement(NavClass, null), document.querySelector(".navadd"));
 
   createLoginWindow(csrf); //default view
 };

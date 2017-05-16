@@ -28,6 +28,7 @@ const makeDomo = (req, res) => {
     eyes: req.body.eyes,
     horns: req.body.horns,
     color: req.body.color,
+    fact: req.body.fact,
     owner: req.session.account._id,
   };
   const newDomo = new Domo.DomoModel(domoData);

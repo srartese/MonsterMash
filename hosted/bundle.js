@@ -9,7 +9,10 @@ let PlaygroundClass;
 let navRender;
 let NavClass;
 let settingsRender;
-let PasswordWindow;
+//let PasswordWindow;
+//let PremiumClass;
+
+const factlist = ["Cheese is a vegetable.", "Monsters never go inside trains.", "Most monsters prefer to be naked.", "Never trust candy from friends.", "Water is poison.", "The internet is real life.", "Snapple facts, yes.", "Fish are friends.", "The moon is God's secuirty camera.", "If you smell roses you smell flowers.", "Magicians are liars.", "Tie your shoes one at a time.", "Eat food off the floor regularly.", "Healthy is a mere idea.", "Clocks are subjective", "Time is illusion.", "Triangles are angry squares.", "Learning is educational.", "Sharks are dinosaurs.", "Pools are bathtubs.", "People with two first names are liars.", "Bears.Beats.Battlestar Galactica.", "Fruits are meat."];
 
 const handleDomo = e => {
   e.preventDefault();
@@ -25,10 +28,21 @@ const handleDomo = e => {
     domoRenderer.dynam();
   });
 
+  domoRenderer = ReactDOM.render(React.createElement(MakerClass, null), document.querySelector(".appmain"));
   return false;
 };
 
+const handlerando = () => {
+
+  const randfact = factlist[Math.floor(Math.random() * factlist.length)];
+  //console.dir(randfact);
+
+  return randfact;
+};
+
 const renderDomo = function () {
+  const rando = handlerando();
+  // console.dir(rando);
   return React.createElement(
     "form",
     { id: "domoForm",
@@ -154,6 +168,11 @@ const renderDomo = function () {
           "Weird"
         )
       ),
+      React.createElement(
+        "div",
+        { id: "monsterFact" },
+        React.createElement("input", { type: "hidden", name: "fact", value: rando })
+      ),
       React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
       React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Monster" })
     )
@@ -175,12 +194,7 @@ const renderDomoList = function () {
 
   const listScope = this;
   const domoNodes = this.state.data.map(function (domo) {
-    //check 
-    // <h3 className="domoEyes"> Eyes: {domo.eyes} </h3>
-    //  <h3 className="domoHorns"> Horns: {domo.horns} </h3>
-    //to which display imag
     const stringthing = "/assets/img/" + domo.color + domo.horns + domo.eyes + ".png";
-
     return React.createElement(MonsterClass, {
       domoid: domo._id,
       domoname: domo.name,
@@ -190,6 +204,7 @@ const renderDomoList = function () {
       monstercolor: domo.color,
       monsterhorns: domo.horns,
       monstereyes: domo.eyes,
+      monsterfact: domo.fact,
       key: domo._id
     });
   });
@@ -236,43 +251,109 @@ const renderPassChange = function () {
       " Account Password Reset"
     ),
     React.createElement(
-      "form",
-      { id: "changePassForm",
-        name: "changePassForm",
-        onSubmit: this.handlePassSubmit,
-        action: "/password",
-        method: "POST",
-        className: "changePassForm"
-      },
+      "div",
+      { className: "premdesc" },
       React.createElement(
-        "label",
-        { htmlFor: "pass0" },
-        "Current Password: "
-      ),
-      React.createElement("input", { id: "pass0", type: "password", name: "pass0", placeholder: "current password" }),
-      React.createElement("br", null),
-      React.createElement("br", null),
-      React.createElement(
-        "label",
-        { htmlFor: "pass" },
-        "New Password: "
-      ),
-      React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "new password" }),
-      React.createElement("br", null),
-      React.createElement(
-        "label",
-        { htmlFor: "pass2" },
-        "New Password: "
-      ),
-      React.createElement("input", { id: "pass2", type: "password", name: "pass2", placeholder: "retype new password" }),
-      React.createElement("br", null),
-      React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
-      React.createElement("input", { className: "passSubmit", type: "submit", value: "Change Password" })
+        "form",
+        { id: "changePassForm",
+          name: "changePassForm",
+          onSubmit: this.handlePassSubmit,
+          action: "/password",
+          method: "POST",
+          className: "changePassForm"
+        },
+        React.createElement(
+          "label",
+          { htmlFor: "pass0" },
+          "Current Password: "
+        ),
+        React.createElement("input", { id: "pass0", type: "password", name: "pass0", placeholder: "current password" }),
+        React.createElement("br", null),
+        React.createElement("br", null),
+        React.createElement(
+          "label",
+          { htmlFor: "pass" },
+          "New Password: "
+        ),
+        React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "new password" }),
+        React.createElement("br", null),
+        React.createElement(
+          "label",
+          { htmlFor: "pass2" },
+          "New Password: "
+        ),
+        React.createElement("input", { id: "pass2", type: "password", name: "pass2", placeholder: "retype password" }),
+        React.createElement("br", null),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: this.props.csrf }),
+        React.createElement("input", { className: "passSubmit", type: "submit", value: "Change Password" })
+      )
     ),
     React.createElement(
       "a",
       { href: "/maker" },
       " Back to Monsters "
+    )
+  );
+};
+
+//RENDER PREMIUM Page
+const renderPremium = function () {
+  return React.createElement(
+    "div",
+    null,
+    React.createElement(
+      "h1",
+      { className: "premm" },
+      " Got Premium? "
+    ),
+    React.createElement(
+      "div",
+      { className: "premdesc" },
+      React.createElement(
+        "h2",
+        null,
+        " Why? "
+      ),
+      React.createElement(
+        "p",
+        null,
+        " The more monsters to make the more creative you get! Premium allows you to create more monster with more options. This means you a able to actually try and collect all the facts. You have taken a step towards stretching your mind, why take a step back and give up now?"
+      ),
+      React.createElement(
+        "ul",
+        null,
+        React.createElement(
+          "li",
+          null,
+          " More Options "
+        ),
+        React.createElement(
+          "li",
+          null,
+          " More Monsters "
+        ),
+        React.createElement(
+          "li",
+          null,
+          " More Facts "
+        ),
+        React.createElement(
+          "li",
+          null,
+          " More Fun "
+        ),
+        React.createElement(
+          "li",
+          null,
+          " Better Mental Health "
+        )
+      ),
+      React.createElement(
+        "h3",
+        null,
+        " Stick around with us! "
+      ),
+      React.createElement("img", { src: "/assets/img/Purple23.png", alt: "monster", className: "monstex" })
     )
   );
 };
@@ -288,11 +369,14 @@ const setup = function (csrf) {
 
   const hangout = ["Library", "Park", "Local Coffee Shop", "Mountain Tops", "Woods", "Groccery Store"];
 
+  //const compliment = ["You are beautiful.", "You are doing great!", "Don't give up.", "You are a star","It gets easier", "It gets better.", "People love you.", "Great job!"];
+
   var randcolor = colorarray[Math.floor(Math.random() * colorarray.length)];
   var randeye = eyearray[Math.floor(Math.random() * eyearray.length)];
   var randhorn = hornarray[Math.floor(Math.random() * hornarray.length)];
   var randname = namearray[Math.floor(Math.random() * namearray.length)];
   var randactivity = activityarray[Math.floor(Math.random() * activityarray.length)];
+
   const alldomo = "/assets/img/" + randcolor + randhorn + randeye + ".png";
 
   var randhang = hangout[Math.floor(Math.random() * hangout.length)];
@@ -342,6 +426,14 @@ const setup = function (csrf) {
     render: renderPassChange
   });
 
+  //Settings for the account password change
+  PremiumClass = React.createClass({
+    displayName: "PremiumClass",
+
+    render: renderPremium
+
+  });
+
   //When you click a single monster you get details
   DetailsClass = React.createClass({
     displayName: "DetailsClass",
@@ -359,6 +451,13 @@ const setup = function (csrf) {
         ),
         React.createElement("img", { src: this.props.stringthing, alt: "domo face", className: "monmeet" }),
         React.createElement("br", null),
+        React.createElement(
+          "h3",
+          { className: "monsterFact" },
+          " ",
+          this.props.monsterfact,
+          " "
+        ),
         React.createElement(
           "h3",
           { className: "monsterage" },
@@ -421,6 +520,15 @@ const setup = function (csrf) {
         React.createElement("img", { src: this.props.stringthing, alt: "domo face", className: "domoFace" }),
         React.createElement(
           "h3",
+          { className: "monsterFact" },
+          " ",
+          this.props.domoname,
+          "'s Fun Fact: '",
+          this.props.monsterfact,
+          "' "
+        ),
+        React.createElement(
+          "h3",
           { className: "domoName" },
           " Name: ",
           this.props.domoname,
@@ -446,7 +554,8 @@ const setup = function (csrf) {
         domohome: this.props.domohome,
         monstereyes: this.props.monstereyes,
         monstercolor: this.props.monstercolor,
-        monsterhorns: this.props.monsterhorns
+        monsterhorns: this.props.monsterhorns,
+        monsterfact: this.props.monsterfact
       }), document.querySelector(".appmain"));
     }
   });
@@ -504,12 +613,17 @@ const setup = function (csrf) {
       return React.createElement(
         "div",
         null,
-        React.createElement("input", { value: "Settings", onClick: this.loadSettings, name: "settings", type: "button", id: "setbut" })
+        React.createElement("input", { value: "Settings", onClick: this.loadSettings, name: "settings", type: "button", id: "setbut" }),
+        React.createElement("input", { value: "Premium", onClick: this.loadPremium, name: "premium", type: "button", id: "setbut" })
       );
     },
     loadSettings: function (e) {
 
       settingsRender = ReactDOM.render(React.createElement(SettingsClass, { csrf: csrf }), document.querySelector(".appmain"));
+    },
+    loadPremium: function (e) {
+
+      premiumRender = ReactDOM.render(React.createElement(PremiumClass, { csrf: csrf }), document.querySelector(".appmain"));
     }
   });
 
