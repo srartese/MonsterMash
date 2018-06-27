@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "engines": {
     "node": "8.11.2",
-    "npm": "6.1.5"
+    "npm": "6.1.0"
   },
   "description": "A Simple Login Example using Node.js, Mongo and Redis",
   "main": "./server/app.js",
